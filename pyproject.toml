@@ -1,0 +1,82 @@
+[project]
+name = "tree-evolution"
+version = "0.1.0"
+description = "Evolutionary algorithm on space of trees"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "numpy>=2.2.4",
+    "scipy>=1.15.2",
+    "sympy>=1.13.1",
+    "torch>=2.6.0",
+    "leap_ec>=0.8.2",
+]
+
+[dependency-groups]
+dev = [
+    "codespell>=2.4.1",
+    "pre-commit>=4.2.0",
+    "pyright>=1.1.398",
+    "pytest>=8.3.5",
+    "pytest-watcher>=0.4.3",
+    "ruff>=0.11.2",
+]
+notebooks = [
+    "jupyterlab>=4.3.6",
+    "jupyterlab-myst>=2.4.2",
+    "jupytext>=1.16.7",
+    "matplotlib>=3.10.1",
+]
+
+[tool.uv]
+default-groups = "all"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.uv.sources]
+torch = [
+    { index = "pytorch-cpu" },
+]
+
+[[tool.uv.index]]
+name = "pytorch-cpu"
+url = "https://download.pytorch.org/whl/cpu"
+explicit = true
+
+[tool.jupytext.formats]
+"notebooks/" = "ipynb"
+"jupytext/" = "py:percent"
+
+[tool.ruff]
+src = [
+    "src",
+    "tests",
+    "jupytext",
+]
+
+[tool.ruff.lint]
+select = [
+    "E",     # pycodestyle
+    "F",     # Pyflakes
+    "D",     # pydoc
+    "UP",    # pyupgrade
+    "B",     # flake8-bugbear
+    "SIM",   # flake8-simplify
+    "PT",    # flake8-pytest-style
+    "I",     # isort
+]
+
+# ignore missing docstrings
+ignore = [
+    "D100",
+    "D101",
+    "D102",
+    "D103",
+    "D104",
+    "D105",
+]
+
+[tool.ruff.lint.pydocstyle]
+convention = "numpy"
