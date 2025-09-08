@@ -78,7 +78,7 @@ browser:
         --interactive \
         --tty \
         --volume .:/code:z \
-        hp-rvpinn:latest \
+        tree-evolution:latest \
         just \
             install-hooks \
             gen-notebooks
