@@ -3,7 +3,7 @@ FROM ubuntu:24.04
 WORKDIR /code
 
 # Install uv
-COPY --from=ghcr.io/astral-sh/uv:0.6.10 /uv /uvx /bin/
+COPY --from=ghcr.io/astral-sh/uv:0.8.15 /uv /uvx /bin/
 
 ENV DEBIAN_FRONTEND=noninteractive
 
@@ -24,11 +24,10 @@ ENV UV_PROJECT_ENVIRONMENT=/venv
 RUN --mount=type=cache,target=/root/.cache/uv \
     --mount=type=bind,source=uv.lock,target=uv.lock,z \
     --mount=type=bind,source=pyproject.toml,target=pyproject.toml,z \
-    uv venv && \
-    uv sync --frozen --no-install-project
+    uv sync --locked --no-install-project
 
 COPY . .
 RUN --mount=type=cache,target=/root/.cache/uv \
-    uv sync --frozen
+    uv sync --locked
 
 RUN uv run pre-commit install-hooks
