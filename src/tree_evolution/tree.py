@@ -15,6 +15,24 @@ class Node:
     def __repr__(self):
         return f"Node({self.label})"
 
+    def __hash__(self):
+        data = (self.label, *[hash(c) for c in self.children])
+        return hash(data)
+
+
+def to_dict(root):
+    return {
+        "label": root.label,
+        "children": [to_dict(c) for c in root.children],
+    }
+
+
+def from_dict(data):
+    return Node(
+        label=data["label"],
+        children=[from_dict(c) for c in data["children"]],
+    )
+
 
 def pretty_print(root):
     queue = [(root, 0)]

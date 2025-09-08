@@ -56,6 +56,7 @@ src = [
     "tests",
     "jupytext",
 ]
+exclude = ["jupytext/problems/*"]
 
 [tool.ruff.lint]
 select = [

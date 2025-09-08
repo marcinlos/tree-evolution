@@ -13,22 +13,19 @@
 # ---
 
 # %% editable=true slideshow={"slide_type": ""}
-import leap_ec
-import leap_ec.probe
-import leap_ec.problem
-import leap_ec.util
-import matplotlib.pyplot as plt
-import numpy as np
 import torch
 from torch import nn
 
-from tree_evolution.evolution import Evolution, ForestRepresentation
-from tree_evolution.nn import ExpressionModule
-from tree_evolution.op import binary_operators, operator_map, unary_operators
+from tree_evolution.io import plot_activations, store
+from tree_evolution.nn import decode_activations
 
-# %% [markdown] editable=true slideshow={"slide_type": ""}
-# # Neural network infrastructure
+# %% editable=true slideshow={"slide_type": ""} tags=["parameters"]
+N = 100
+NEURONS_PER_LAYER = 512
+EPOCHS = 200
 
+ACTIVATIONS = None
+OUTPUT_PATH = None
 
 # %% editable=true slideshow={"slide_type": ""}
 DEVICE = (
@@ -43,14 +40,13 @@ print(f"Using {DEVICE} device")
 
 # %% editable=true slideshow={"slide_type": ""}
 class PINN(nn.Module):
-    def __init__(self, trees, size=512):
+    def __init__(self, activations, size=512):
         super().__init__()
 
         modules = [nn.Linear(2, size)]
 
-        for expr in trees:
-            activation = ExpressionModule(expr, operator_map())
-            modules.append(activation)
+        for act in activations:
+            modules.append(act)
             modules.append(nn.Linear(size, size))
 
         modules[-1] = nn.Linear(size, 1)
@@ -74,8 +70,16 @@ class PINN(nn.Module):
 # %% [markdown]
 # # Neural network example
 
+# %% editable=true slideshow={"slide_type": ""}
+activations = decode_activations(ACTIVATIONS)
+pinn = PINN(activations, size=NEURONS_PER_LAYER).to(DEVICE)
+print(pinn)
 
 # %%
+plot_activations(activations)
+
+
+# %% editable=true slideshow={"slide_type": ""}
 class LossFunction:
     def __init__(self, fun, n):
         self.fun = fun
@@ -101,7 +105,7 @@ def fun(x, y):
 
 
 # %%
-loss_fn = LossFunction(fun, 100)
+loss_fn = LossFunction(fun, N)
 
 
 # %%
@@ -119,65 +123,13 @@ def train(pinn, steps, verbose=False):
 
         if verbose and i % 10 == 0:
             print(f"Iter {i}: loss = {loss_val}")
+            plot_activations(activations)
 
     return log
 
 
-# %% [markdown]
-# # Evolutionary algorithm + neural network example
-
-# %%
-COUNT = 2
-DEPTH = 2
-EPOCHS = 100
-GENERATIONS = 30
-POPULATION_SIZE = 5
-
-
-# %%
-def fun_to_approximate(x, y):
-    return torch.exp(x + y)
-
-
-loss_fn = LossFunction(fun, n=20)
-
-
-# %%
-def fitness(trees):
-    pinn = PINN(trees).to(DEVICE)
-    losses = train(pinn, EPOCHS)
-    err = np.array(losses)
-    return np.min(err)
-
-
-problem = leap_ec.problem.FunctionProblem(fitness, maximize=False)
-
-# %%
-forest = ForestRepresentation(
-    count=COUNT,
-    depth=DEPTH,
-    unary=unary_operators(),
-    binary=binary_operators(),
-)
-
-
-# %%
-evolution = Evolution(problem, POPULATION_SIZE, forest)
-
 # %% editable=true slideshow={"slide_type": ""}
-while evolution.generation < GENERATIONS:
-    evolution.step()
-    if evolution.generation % 1 == 0:
-        evolution.print_population()
-        print()
-
+log = train(pinn, EPOCHS, verbose=True)
 
 # %%
-parents = evolution.population
-trees = parents[0].genome
-tree = trees[0]
-
-mod = ExpressionModule(tree, operator_map())
-x = torch.linspace(-1, 1, 100, requires_grad=False)
-y = mod(x)
-plt.plot(x.numpy(), y.detach().numpy())
+store(OUTPUT_PATH, log)

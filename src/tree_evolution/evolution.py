@@ -7,6 +7,10 @@ from toolz import pipe
 from tree_evolution.tree import Node, node_list, random_path, select_node, swap_subtrees
 
 
+def forest_id(forest):
+    return f"{abs(hash(tuple(forest))):X}"
+
+
 def random_expr_tree(depth, unary, binary):
     if depth == 0:
         return Node("")
@@ -96,6 +100,7 @@ class Evolution:
             decoder=self.decoder,
         )
         self.population = leap_ec.individual.Individual.evaluate_population(parents)
+        self.best = max(self.population)
 
     def step(self):
         offspring = pipe(
@@ -111,8 +116,23 @@ class Evolution:
         self.counter()
 
     def print_population(self):
-        leap_ec.probe.print_population(
-            self.population, leap_ec.context["leap"]["generation"]
+        gen = self.generation
+
+        for individual in self.population:
+            print(
+                gen,
+                individual.genome,
+                individual.fitness,
+                forest_id(individual.genome),
+            )
+
+        best = max(self.population)
+        self.best = max([best, self.best])
+        print(f"Best in gen: {best.genome} {best.fitness} id={forest_id(best.genome)}")
+
+        print(
+            f"Best: {self.best.genome} {self.best.fitness}"
+            f" id={forest_id(self.best.genome)}"
         )
 
     @property

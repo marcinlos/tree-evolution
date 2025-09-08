@@ -1,7 +1,10 @@
-# from torch import nn
 import copy
 
 import torch
+from torch import nn
+
+from tree_evolution.op import operator_map
+from tree_evolution.tree import from_dict
 
 
 class ExpressionModule(torch.nn.Module):
@@ -41,3 +44,24 @@ class ExpressionModule(torch.nn.Module):
 
         process(root)
         return param_start
+
+
+_fixed_activations = {
+    "tanh": nn.Tanh(),
+}
+
+
+def decode_activations(data):
+    ops = operator_map()
+
+    def parse(label, content):
+        match label:
+            case "expr":
+                tree = from_dict(content)
+                return ExpressionModule(tree, ops)
+            case "fixed":
+                return _fixed_activations[content]
+            case _:
+                raise ValueError(f"Unknown activation type: {label}")
+
+    return [parse(label, content) for label, content in data]
