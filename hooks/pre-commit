@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+exec podman run \
+    --rm \
+    -v .:/code \
+    tree-evolution:latest \
+    uv run pre-commit

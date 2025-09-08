@@ -10,6 +10,7 @@ dependencies = [
     "sympy>=1.13.1",
     "torch>=2.6.0",
     "leap_ec>=0.8.2",
+    "papermill>=2.6.0",
 ]
 
 [dependency-groups]
