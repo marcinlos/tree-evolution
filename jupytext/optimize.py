@@ -24,14 +24,22 @@ from tree_evolution.op import binary_operators, unary_operators
 from tree_evolution.tree import to_dict
 
 # %% editable=true slideshow={"slide_type": ""} tags=["parameters"]
-NOTEBOOK = "problems/problem_simple.ipynb"
-SUFFIX = "E50_N30"
-PARAMS = {"EPOCHS": 100, "N": 30}
+# NOTEBOOK = "problems/problem_simple.ipynb"
+# SUFFIX = "E50_N30"
+# PARAMS = {"EPOCHS": 100, "N": 30}
+
+NOTEBOOK = "problems/PINN_Laplace_Gram.ipynb"
+SUFFIX = "EJ"
+PARAMS = {
+    "EPOCHS": 10_000,
+    "EXAMPLE": 3,
+    "EPSILON": 0.1,
+}
 
 # Evolutionary search parameters
 COUNT = 2
 DEPTH = 2
-GENERATIONS = 15
+GENERATIONS = 10
 POPULATION_SIZE = 5
 
 

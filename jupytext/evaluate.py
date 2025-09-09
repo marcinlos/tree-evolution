@@ -112,9 +112,101 @@ activations = [
     ],
 ]
 
+# %%
+activations = [
+    [
+        "expr",
+        {
+            "label": "sum",
+            "children": [
+                {
+                    "label": "scaled",
+                    "children": [
+                        {
+                            "label": "product",
+                            "children": [
+                                {
+                                    "label": "scaled",
+                                    "children": [{"label": "", "children": []}],
+                                },
+                                {
+                                    "label": "abs",
+                                    "children": [{"label": "", "children": []}],
+                                },
+                            ],
+                        }
+                    ],
+                },
+                {
+                    "label": "exp",
+                    "children": [
+                        {
+                            "label": "product",
+                            "children": [
+                                {
+                                    "label": "const",
+                                    "children": [{"label": "", "children": []}],
+                                },
+                                {
+                                    "label": "abs",
+                                    "children": [{"label": "", "children": []}],
+                                },
+                            ],
+                        }
+                    ],
+                },
+            ],
+        },
+    ],
+    [
+        "expr",
+        {
+            "label": "quot",
+            "children": [
+                {
+                    "label": "exp",
+                    "children": [
+                        {
+                            "label": "product",
+                            "children": [
+                                {
+                                    "label": "const",
+                                    "children": [{"label": "", "children": []}],
+                                },
+                                {
+                                    "label": "square",
+                                    "children": [{"label": "", "children": []}],
+                                },
+                            ],
+                        }
+                    ],
+                },
+                {
+                    "label": "exp",
+                    "children": [
+                        {
+                            "label": "sum",
+                            "children": [
+                                {
+                                    "label": "const",
+                                    "children": [{"label": "", "children": []}],
+                                },
+                                {
+                                    "label": "const",
+                                    "children": [{"label": "", "children": []}],
+                                },
+                            ],
+                        }
+                    ],
+                },
+            ],
+        },
+    ],
+]
+
 # %% editable=true slideshow={"slide_type": ""} tags=["parameters"]
 activations_tanh = [["fixed", "tanh"], ["fixed", "tanh"]]
-OUTPUT_DIR = "out"
+OUTPUT_DIR = "compare"
 CASES = [
     # {
     #     "notebook": "problems/problem_simple.ipynb",
@@ -134,34 +226,16 @@ CASES = [
     #     },
     #     "name": "case2",
     # },
-    # {
-    #     "notebook": "problems/PINN_Laplace_Gram.ipynb",
-    #     "params": {
-    #         "EPOCHS": 20_000,
-    #         "EXAMPLE": 3,
-    #         "EPSILON": 0.1,
-    #         "ACTIVATIONS": activations_tanh,
-    #     },
-    #     "name": "laplace_EJ_tanh",
-    # },
-    # {
-    #     "notebook": "problems/PINN_Laplace_Gram.ipynb",
-    #     "params": {
-    #         "EPOCHS": 20_000,
-    #         "EXAMPLE": 1,
-    #         "ACTIVATIONS": activations_tanh,
-    #     },
-    #     "name": "laplace_sinsin_tanh",
-    # },
-    # {
-    #     "notebook": "problems/PINN_Laplace_Gram.ipynb",
-    #     "params": {
-    #         "EPOCHS": 20_000,
-    #         "EXAMPLE": 2,
-    #         "ACTIVATIONS": activations_tanh,
-    #     },
-    #     "name": "laplace_expsin_tanh",
-    # },
+    {
+        "notebook": "problems/PINN_Laplace_Gram.ipynb",
+        "params": {
+            "EPOCHS": 20_000,
+            "EXAMPLE": 3,
+            "EPSILON": 0.1,
+            "ACTIVATIONS": activations_tanh,
+        },
+        "name": "laplace_EJ_tanh",
+    },
     {
         "notebook": "problems/PINN_Laplace_Gram.ipynb",
         "params": {
@@ -177,9 +251,27 @@ CASES = [
         "params": {
             "EPOCHS": 20_000,
             "EXAMPLE": 1,
+            "ACTIVATIONS": activations_tanh,
+        },
+        "name": "laplace_sinsin_tanh",
+    },
+    {
+        "notebook": "problems/PINN_Laplace_Gram.ipynb",
+        "params": {
+            "EPOCHS": 20_000,
+            "EXAMPLE": 1,
             "ACTIVATIONS": activations,
         },
         "name": "laplace_sinsin_tree",
+    },
+    {
+        "notebook": "problems/PINN_Laplace_Gram.ipynb",
+        "params": {
+            "EPOCHS": 20_000,
+            "EXAMPLE": 2,
+            "ACTIVATIONS": activations_tanh,
+        },
+        "name": "laplace_expsin_tanh",
     },
     {
         "notebook": "problems/PINN_Laplace_Gram.ipynb",
