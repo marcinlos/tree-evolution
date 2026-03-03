@@ -1,3 +1,4 @@
+import os
 import pickle
 import tempfile
 from contextlib import contextmanager
@@ -26,14 +27,20 @@ def tmp_output_file():
 
 
 def run_notebook(notebook, output, params):
-    with tmp_output_file() as out_path:
+    _ensure_dir_exists(output)
+    with tmp_output_file() as result_path:
         pm.execute_notebook(
             notebook,
             output,
-            parameters={"OUTPUT_PATH": str(out_path), **params},
+            parameters={"OUTPUT_PATH": str(result_path), **params},
             progress_bar=False,
         )
-        return load(out_path)
+        return load(result_path)
+
+
+def _ensure_dir_exists(output_file: str | os.PathLike) -> None:
+    path = Path(output_file)
+    path.parent.mkdir(parents=True, exist_ok=True)
 
 
 def plot_activations(activations, bounds=(-1, 1), n=100):
