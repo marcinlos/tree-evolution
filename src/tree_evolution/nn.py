@@ -7,12 +7,12 @@ from tree_evolution.op import operator_map
 from tree_evolution.tree import from_dict
 
 
-class ExpressionModule(torch.nn.Module):
+class ExpressionModule(nn.Module):
     def __init__(self, expr, ops):
         super().__init__()
         self.expr = copy.deepcopy(expr)
         self.param_count = self._annotate_expr_tree(self.expr, ops)
-        self.params = torch.nn.Parameter(torch.randn(self.param_count))
+        self.params = nn.Parameter(torch.randn(self.param_count))
 
     def forward(self, x):
         return self._eval(x, self.expr)
