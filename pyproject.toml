@@ -1,7 +1,7 @@
 [project]
 name = "tree-evolution"
 version = "0.1.0"
-description = "Evolutionary algorithm on space of trees"
+description = "PINN with activation functions selected by an evolutionary algorithm on a space of trees"
 authors = [
     { name = "Marcin Łoś", email = "los@agh.edu.pl"},
 ]
@@ -9,6 +9,21 @@ readme = "README.md"
 license = "MIT"
 license-files = ["LICENSE"]
 requires-python = ">=3.12"
+classifiers = [
+  "Development Status :: 1 - Planning",
+  "Intended Audience :: Science/Research",
+  "Intended Audience :: Developers",
+  "Operating System :: OS Independent",
+  "Programming Language :: Python",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3 :: Only",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
+  "Programming Language :: Python :: 3.14",
+  "Programming Language :: Python :: 3.15",
+  "Topic :: Scientific/Engineering",
+]
+
 dependencies = [
     "numpy>=2.0.2",
     "scipy>=1.16.3",
