@@ -629,10 +629,6 @@ t = grids[1].flatten().reshape(-1, 1).to(device)
 
 
 # %% colab={"base_uri": "https://localhost:8080/", "height": 370} id="br0hz_u9xKy4" outputId="2af069ee-23b6-46cc-fcd0-b375d88296bb"
-def sin_act(x):
-    return torch.sin(x)
-
-
 pinn = PINN(activations, NEURONS_PER_LAYER, pinning=True).to(device)
 
 compute_loss(pinn, x=x, t=t)
