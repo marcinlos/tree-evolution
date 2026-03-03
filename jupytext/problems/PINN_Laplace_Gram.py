@@ -32,6 +32,11 @@ device
 
 # %% editable=true id="fUALizNo5wz6" slideshow={"slide_type": ""} tags=["parameters"]
 # if you use the idea of RPINN in your paper, could you please cite https://arxiv.org/abs/2401.02300
+
+# >>>CHANGE<<<
+# This cell must have "parameters" tag
+# See https://papermill.readthedocs.io/en/latest/usage-parameterize.html
+
 LENGTH = 1.0
 TOTAL_TIME = 1.0
 N_POINTS_X = 40
@@ -43,6 +48,8 @@ RPINN = 1  # 1: RPINN, 0: PINN
 EXAMPLE = 3  # 1: sin*sin, 2: exp*sin, 3: Eriksson-Johnson
 EPSILON = 0.01  # for Eriksson-Johnson epsilon in (0.1,1)
 
+PLOT_ACTIVATIONS_EVERY = 1000 # how many epochs between plotting activation functions
+
 ACTIVATIONS = None
 OUTPUT_PATH = None
 
@@ -52,9 +59,15 @@ OUTPUT_PATH = None
 #
 
 
-# %%
-activations = decode_activations(ACTIVATIONS)
-plot_activations(activations)
+# %% editable=true slideshow={"slide_type": ""}
+# >>>CHANGE<<<
+# Parse the injected description of the activation functions
+ACTIVATION_MODULES = decode_activations(ACTIVATIONS)
+
+# %% editable=true slideshow={"slide_type": ""}
+# >>>CHANGE<<<
+# Plot the initial state of the activation functions
+plot_activations(ACTIVATION_MODULES)
 
 
 # %% id="iO0Bk6pp5-oz"
@@ -65,15 +78,19 @@ class PINN(nn.Module):
     to approximate the solution of the differential equation
     """
 
-    def __init__(self, acts, dim_hidden: int, pinning: bool = False):
+    def __init__(self, activations: list[nn.Module], dim_hidden: int, pinning: bool = False):
         super().__init__()
 
         self.pinning = pinning
 
+        # >>>CHANGE<<<
+        # Incorporate the activation functions into the network.
+        # If the layers are aggregated in a nn.Sequential object, weights of activation functions
+        # are accounted for in the training process. Other approaches may or may not work!
         modules = [nn.Linear(2, dim_hidden)]
 
-        for activation in acts:
-            modules.append(activation)
+        for act in activations:
+            modules.append(act)
             modules.append(nn.Linear(dim_hidden, dim_hidden))
 
         modules[-1] = nn.Linear(dim_hidden, 1)
@@ -489,8 +506,10 @@ def train_model(
                 )
                 time_total = 0
 
-            if (epoch + 1) % 1000 == 0:
-                plot_activations(activations)
+            # >>>CHANGE<<<
+            # Plot activation functions to observe their changes during the training
+            if (epoch + 1) % PLOT_ACTIVATIONS_EVERY == 0:
+                plot_activations(ACTIVATION_MODULES)
 
         except KeyboardInterrupt:
             break
@@ -628,8 +647,10 @@ x = grids[0].flatten().reshape(-1, 1).to(device)
 t = grids[1].flatten().reshape(-1, 1).to(device)
 
 
-# %% colab={"base_uri": "https://localhost:8080/", "height": 370} id="br0hz_u9xKy4" outputId="2af069ee-23b6-46cc-fcd0-b375d88296bb"
-pinn = PINN(activations, NEURONS_PER_LAYER, pinning=True).to(device)
+# %% colab={"base_uri": "https://localhost:8080/", "height": 370} id="br0hz_u9xKy4" outputId="2af069ee-23b6-46cc-fcd0-b375d88296bb" editable=true slideshow={"slide_type": ""}
+# >>>CHANGE<<<
+# Pass the activation functions to the PINN
+pinn = PINN(ACTIVATION_MODULES, NEURONS_PER_LAYER, pinning=True).to(device)
 
 compute_loss(pinn, x=x, t=t)
 
@@ -710,4 +731,6 @@ if EXAMPLE == 3:
 color = plot_color_error(z.cpu(), x.cpu(), t.cpu(), N_POINTS_X, N_POINTS_T)
 
 # %%
+# >>>CHANGE<<<
+# Store the results in a file
 store(OUTPUT_PATH, LOSSES)
