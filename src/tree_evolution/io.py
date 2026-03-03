@@ -28,7 +28,7 @@ def tmp_output_file():
         yield Path(tmpdir) / "result"
 
 
-def run_notebook(notebook, output, params, html=False):
+def run_notebook(notebook, output, params, output_html=False):
     _ensure_dir_exists(output)
     with tmp_output_file() as result_path:
         pm.execute_notebook(
@@ -37,7 +37,7 @@ def run_notebook(notebook, output, params, html=False):
             parameters={"OUTPUT_PATH": str(result_path), **params},
             progress_bar=False,
         )
-        if html:
+        if output_html:
             _convert_notebook_to_html(output, output.with_suffix(".html"))
         return load(result_path)
 

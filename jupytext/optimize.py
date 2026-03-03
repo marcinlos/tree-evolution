@@ -56,7 +56,7 @@ def make_problem(notebook, suffix, params, out_dir=Path("out")):
             input_file,
             output_file,
             {"ACTIVATIONS": activations, **params},
-            html=True,
+            output_html=True,
         )
         err = np.array(losses)
         return np.min(err)
