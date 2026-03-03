@@ -2944,8 +2944,8 @@ requires-dist = [
     { name = "scipy", specifier = ">=1.16.3" },
     { name = "sympy", specifier = ">=1.14.0" },
     { name = "torch", specifier = ">=2.9.0" },
-    { name = "torch", marker = "extra == 'cpu'", specifier = "==2.9.1", index = "https://download.pytorch.org/whl/cpu", conflict = { package = "tree-evolution", extra = "cpu" } },
-    { name = "torch", marker = "extra == 'gpu'", specifier = "==2.9.1", index = "https://download.pytorch.org/whl/cu130", conflict = { package = "tree-evolution", extra = "gpu" } },
+    { name = "torch", marker = "extra == 'cpu'", specifier = ">=2.9.0", index = "https://download.pytorch.org/whl/cpu", conflict = { package = "tree-evolution", extra = "cpu" } },
+    { name = "torch", marker = "extra == 'gpu'", specifier = ">=2.9.0", index = "https://download.pytorch.org/whl/cu130", conflict = { package = "tree-evolution", extra = "gpu" } },
 ]
 provides-extras = ["cpu", "gpu"]
 

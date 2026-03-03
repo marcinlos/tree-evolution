@@ -8,7 +8,7 @@ authors = [
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
-    "numpy>=2.2.4",
+    "numpy>=2.0.2",
     "scipy>=1.16.3",
     "sympy>=1.14.0",
     "torch>=2.9.0",
@@ -33,8 +33,8 @@ notebooks = [
 ]
 
 [project.optional-dependencies]
-cpu = [ "torch==2.9.1" ]
-gpu = [ "torch==2.9.1" ]
+cpu = [ "torch>=2.9.0" ]
+gpu = [ "torch>=2.9.0" ]
 
 [tool.uv]
 default-groups = "all"
