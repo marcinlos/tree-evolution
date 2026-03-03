@@ -5,7 +5,7 @@
 #       extension: .py
 #       format_name: percent
 #       format_version: '1.3'
-#       jupytext_version: 1.17.2
+#       jupytext_version: 1.19.1
 #   kernelspec:
 #     display_name: Python 3 (ipykernel)
 #     language: python
@@ -30,7 +30,7 @@ from tree_evolution.nn import decode_activations
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 device
 
-# %% id="fUALizNo5wz6" editable=true slideshow={"slide_type": ""} tags=["parameters"]
+# %% editable=true id="fUALizNo5wz6" slideshow={"slide_type": ""} tags=["parameters"]
 # if you use the idea of RPINN in your paper, could you please cite https://arxiv.org/abs/2401.02300
 LENGTH = 1.0
 TOTAL_TIME = 1.0
