@@ -9,27 +9,27 @@ readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
     "numpy>=2.2.4",
-    "scipy>=1.15.2",
-    "sympy>=1.13.1",
-    "torch>=2.6.0",
+    "scipy>=1.16.3",
+    "sympy>=1.14.0",
+    "torch>=2.9.0",
     "leap_ec>=0.8.2",
-    "papermill>=2.6.0",
+    "papermill>=2.7.0",
 ]
 
 [dependency-groups]
 dev = [
     "codespell>=2.4.1",
-    "pre-commit>=4.2.0",
-    "pyright>=1.1.398",
-    "pytest>=8.3.5",
-    "pytest-watcher>=0.4.3",
-    "ruff>=0.11.2",
+    "pre-commit>=4.5.1",
+    "pyright>=1.1.408",
+    "pytest>=9.0.2",
+    "pytest-watcher>=0.6.3",
+    "ruff>=0.15.4",
 ]
 notebooks = [
-    "jupyterlab>=4.3.6",
-    "jupyterlab-myst>=2.4.2",
-    "jupytext>=1.16.7",
-    "matplotlib>=3.10.1",
+    "jupyterlab>=4.5.5",
+    "jupyterlab-myst>=2.6.0",
+    "jupytext>=1.19.1",
+    "matplotlib>=3.10.8",
 ]
 
 [tool.uv]
