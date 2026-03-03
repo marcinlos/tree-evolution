@@ -40,8 +40,8 @@ LAYERS = 2
 NEURONS_PER_LAYER = 100
 EPOCHS = 40_000  # set 20_000 for example 1 and 3, set 40_000 for example 2
 LEARNING_RATE = 0.0001
-RPINN = 1  # =1 RPINN =0 PINN
-EXAMPLE = 3  # 1 sin*sin, #2 exp*sin #3 Eriksson-Johnson
+RPINN = 1  # 1: RPINN, 0: PINN
+EXAMPLE = 3  # 1: sin*sin, 2: exp*sin, 3: Eriksson-Johnson
 EPSILON = 0.01  # for Eriksson-Johnson epsilon in (0.1,1)
 
 ACTIVATIONS = None
