@@ -19,7 +19,7 @@ import leap_ec.problem
 import numpy as np
 
 from tree_evolution.evolution import Evolution, ForestRepresentation, forest_id
-from tree_evolution.io import run_notebook
+from tree_evolution.nb import run_notebook
 from tree_evolution.op import binary_operators, unary_operators
 from tree_evolution.tree import to_dict
 
