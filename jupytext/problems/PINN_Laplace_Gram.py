@@ -36,7 +36,6 @@ LENGTH = 1.0
 TOTAL_TIME = 1.0
 N_POINTS_X = 40
 N_POINTS_T = 40
-LAYERS = 2
 NEURONS_PER_LAYER = 100
 EPOCHS = 40_000  # set 20_000 for example 1 and 3, set 40_000 for example 2
 LEARNING_RATE = 0.0001
@@ -66,27 +65,24 @@ class PINN(nn.Module):
     to approximate the solution of the differential equation
     """
 
-    def __init__(self, num_hidden: int, dim_hidden: int, acts, pinning: bool = False):
+    def __init__(self, acts, dim_hidden: int, pinning: bool = False):
         super().__init__()
 
         self.pinning = pinning
 
-        self.layer_in = nn.Linear(2, dim_hidden)
-        self.layer_out = nn.Linear(dim_hidden, 1)
+        modules = [nn.Linear(2, dim_hidden)]
 
-        num_middle = num_hidden - 1
-        self.middle_layers = nn.ModuleList(
-            [nn.Linear(dim_hidden, dim_hidden) for _ in range(num_middle)]
-        )
-        self.acts = acts
+        for activation in acts:
+            modules.append(activation)
+            modules.append(nn.Linear(dim_hidden, dim_hidden))
+
+        modules[-1] = nn.Linear(dim_hidden, 1)
+
+        self.layers = nn.Sequential(*modules)
 
     def forward(self, x, t):
         x_stack = torch.cat([x, t], dim=1)
-        first_act, *other_act = self.acts
-        out = first_act(self.layer_in(x_stack))
-        for layer, act in zip(self.middle_layers, other_act):
-            out = act(layer(out))
-        logits = self.layer_out(out)
+        logits = self.layers(x_stack)
 
         # if requested pin the boundary conditions
         # using a surrogate model: (x - 0) * (x - L) * NN(x)
@@ -637,7 +633,7 @@ def sin_act(x):
     return torch.sin(x)
 
 
-pinn = PINN(LAYERS, NEURONS_PER_LAYER, pinning=True, acts=activations).to(device)
+pinn = PINN(activations, NEURONS_PER_LAYER, pinning=True).to(device)
 
 compute_loss(pinn, x=x, t=t)
 
