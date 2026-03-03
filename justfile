@@ -39,6 +39,7 @@
         -p 8888:8888 \
         --name tree-evolution-jupyter \
         --volume .:/code:z \
+        --device nvidia.com/gpu=all \
         tree-evolution:latest \
         uv run jupyter lab \
             --ip 0.0.0.0 \
