@@ -128,10 +128,13 @@ class Evolution:
 
         best = max(self.population)
         self.best = max([best, self.best])
-        print(f"Best in gen: {best.genome} {best.fitness} id={forest_id(best.genome)}")
+        print(
+            f"Best in generation: {best.genome} {best.fitness}"
+            f" id={forest_id(best.genome)}"
+        )
 
         print(
-            f"Best: {self.best.genome} {self.best.fitness}"
+            f"Best overall: {self.best.genome} {self.best.fitness}"
             f" id={forest_id(self.best.genome)}"
         )
 
