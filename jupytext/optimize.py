@@ -12,6 +12,10 @@
 #     name: python3
 # ---
 
+# %%
+# Execute this line first on Google Colab
+# # %pip install "tree-evolution[gpu] @ git+https://github.com/marcinlos/tree-evolution"
+
 # %% editable=true slideshow={"slide_type": ""}
 from pathlib import Path
 
