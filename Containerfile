@@ -13,7 +13,8 @@ RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
     apt-get install -y --no-install-recommends \
         git \
         python3 \
-        just
+        just \
+        libatomic1
 
 # Set up the project dependencies
 ENV UV_LINK_MODE=copy
