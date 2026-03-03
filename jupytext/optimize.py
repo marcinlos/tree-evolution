@@ -23,11 +23,7 @@ from tree_evolution.nb import run_notebook
 from tree_evolution.op import binary_operators, unary_operators
 from tree_evolution.tree import to_dict
 
-# %% editable=true slideshow={"slide_type": ""} tags=["parameters"]
-# NOTEBOOK = "problems/problem_simple.ipynb"
-# SUFFIX = "E50_N30"
-# PARAMS = {"EPOCHS": 100, "N": 30}
-
+# %% editable=true slideshow={"slide_type": ""}
 NOTEBOOK = "problems/PINN_Laplace_Gram.ipynb"
 SUFFIX = "EJ"
 PARAMS = {
