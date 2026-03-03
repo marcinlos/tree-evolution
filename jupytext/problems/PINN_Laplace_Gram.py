@@ -489,7 +489,7 @@ def train_model(
                 )
                 time_total = 0
 
-            if (epoch + 1) % 10000 == 0:
+            if (epoch + 1) % 1000 == 0:
                 plot_activations(activations)
 
         except KeyboardInterrupt:
