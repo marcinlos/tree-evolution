@@ -5,6 +5,8 @@ from contextlib import contextmanager
 from pathlib import Path
 
 import matplotlib.pyplot as plt
+import nbconvert
+import nbformat
 import numpy as np
 import papermill as pm
 import torch
@@ -26,7 +28,7 @@ def tmp_output_file():
         yield Path(tmpdir) / "result"
 
 
-def run_notebook(notebook, output, params):
+def run_notebook(notebook, output, params, html=False):
     _ensure_dir_exists(output)
     with tmp_output_file() as result_path:
         pm.execute_notebook(
@@ -35,7 +37,19 @@ def run_notebook(notebook, output, params):
             parameters={"OUTPUT_PATH": str(result_path), **params},
             progress_bar=False,
         )
+        if html:
+            _convert_notebook_to_html(output, output.with_suffix(".html"))
         return load(result_path)
+
+
+def _convert_notebook_to_html(notebook_path, output_path):
+    with notebook_path.open("r") as f:
+        notebook = nbformat.read(f, as_version=4)
+        exporter = nbconvert.HTMLExporter(template_name="classic")
+        data, _ = exporter.from_notebook_node(notebook)
+
+    with output_path.open("w") as f:
+        f.write(data)
 
 
 def _ensure_dir_exists(output_file: str | os.PathLike) -> None:

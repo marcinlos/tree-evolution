@@ -2901,6 +2901,8 @@ version = "0.1.0"
 source = { editable = "." }
 dependencies = [
     { name = "leap-ec" },
+    { name = "nbconvert" },
+    { name = "nbformat" },
     { name = "numpy" },
     { name = "papermill" },
     { name = "scipy" },
@@ -2939,6 +2941,8 @@ notebooks = [
 [package.metadata]
 requires-dist = [
     { name = "leap-ec", specifier = ">=0.8.2" },
+    { name = "nbconvert", specifier = ">=7.16.6" },
+    { name = "nbformat", specifier = ">=5.10.4" },
     { name = "numpy", specifier = ">=2.0.2" },
     { name = "papermill", specifier = ">=2.7.0" },
     { name = "scipy", specifier = ">=1.16.3" },
