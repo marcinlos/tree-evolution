@@ -8,7 +8,7 @@ from tree_evolution.tree import Node, node_list, random_path, select_node, swap_
 
 
 def forest_id(forest):
-    return f"{abs(hash(tuple(forest))):X}"
+    return f"{abs(hash(tuple(forest))):016x}"
 
 
 def random_expr_tree(depth, unary, binary):
