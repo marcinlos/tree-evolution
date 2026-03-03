@@ -3,7 +3,7 @@ FROM ubuntu:24.04
 WORKDIR /code
 
 # Install uv
-COPY --from=ghcr.io/astral-sh/uv:0.8.15 /uv /uvx /bin/
+COPY --from=ghcr.io/astral-sh/uv:0.10.7 /uv /uvx /bin/
 
 ENV DEBIAN_FRONTEND=noninteractive
 
