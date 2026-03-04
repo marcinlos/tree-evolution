@@ -12,9 +12,23 @@
 #     name: python3
 # ---
 
+# %% [markdown]
+# # Tree evolution
+
+# %% [markdown]
+# ## Prepare the environment (Google Colab)
+#
+# Step 1:
+# Uncomment and execute the following line to install the code:
+
 # %%
-# Execute this line first on Google Colab
 # # %pip install "tree-evolution[gpu] @ git+https://github.com/marcinlos/tree-evolution"
+
+# %% [markdown]
+# Step 2:
+# Upload the adequately prepared PINN notebook into the runtime environment.
+#
+# Example notebook with the Laplace equation can be obtained here: https://dysk.agh.edu.pl/public.php/dav/files/p69GiycpN5fynBH/?accept=zip
 
 # %% editable=true slideshow={"slide_type": ""}
 from pathlib import Path
@@ -29,9 +43,15 @@ from tree_evolution.nb import run_notebook
 from tree_evolution.op import OperatorRegister
 from tree_evolution.tree import to_dict
 
+# %% [markdown]
+# ## Configuration
+
 # %% editable=true slideshow={"slide_type": ""}
+# Path to the notebook representing the evaluation function
 NOTEBOOK = "problems/PINN_Laplace_Gram.ipynb"
 SUFFIX = "EJ"
+
+# Parameters injected into the above notebook
 PARAMS = {
     "EPOCHS": 10_000,
     "EXAMPLE": 3,
@@ -44,6 +64,8 @@ DEPTH = 2
 GENERATIONS = 10
 POPULATION_SIZE = 5
 
+# %% [markdown]
+# Now we define operators used to construct expressions during the evolutionary search.
 
 # %%
 ops = OperatorRegister()
@@ -222,9 +244,17 @@ forest = ForestRepresentation(
 )
 
 
+# %% [markdown]
+# ## Execution
+#
+# First we create and evaluate the initial population.
+
 # %%
 evolution = Evolution(problem, POPULATION_SIZE, forest)
 evolution.print_population()
+
+# %% [markdown]
+# The main loop of the evolutionary algorithm.
 
 # %% editable=true slideshow={"slide_type": ""}
 while evolution.generation < GENERATIONS:
@@ -232,3 +262,12 @@ while evolution.generation < GENERATIONS:
     if evolution.generation % 1 == 0:
         evolution.print_population()
         print()
+
+# %% [markdown]
+# ## Retrieve the results from Google Colab
+#
+# Uncomment and execute the following cell to zip the `out` directory.
+# The resulting `.zip` file can be easily downloaded and inspected locally.
+
+# %%
+# # !zip -r out.zip out
