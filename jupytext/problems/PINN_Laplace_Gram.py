@@ -24,7 +24,7 @@ import torch
 from matplotlib.animation import FuncAnimation
 from torch import nn
 
-from tree_evolution.io import plot_activations, store
+from tree_evolution.io import plot_activations, store, load
 from tree_evolution.nn import decode_activations
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
@@ -52,6 +52,7 @@ PLOT_ACTIVATIONS_EVERY = 1000 # how many epochs between plotting activation func
 
 ACTIVATIONS = None
 OUTPUT_PATH = None
+OPERATORS = None
 
 
 # %% [markdown] id="H1ggZhgy57X9"
@@ -62,7 +63,8 @@ OUTPUT_PATH = None
 # %% editable=true slideshow={"slide_type": ""}
 # >>>CHANGE<<<
 # Parse the injected description of the activation functions
-ACTIVATION_MODULES = decode_activations(ACTIVATIONS)
+ops = load(OPERATORS)
+ACTIVATION_MODULES = decode_activations(ACTIVATIONS, ops)
 
 # %% editable=true slideshow={"slide_type": ""}
 # >>>CHANGE<<<

@@ -3,7 +3,6 @@ import copy
 import torch
 from torch import nn
 
-from tree_evolution.op import operator_map
 from tree_evolution.tree import from_dict
 
 
@@ -51,8 +50,8 @@ _fixed_activations = {
 }
 
 
-def decode_activations(data):
-    ops = operator_map()
+def decode_activations(data, operators):
+    ops = operators.map()
 
     def parse(label, content):
         match label:

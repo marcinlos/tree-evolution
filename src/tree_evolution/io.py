@@ -1,5 +1,4 @@
-import pickle
-
+import dill
 import matplotlib.pyplot as plt
 import numpy as np
 import torch
@@ -7,12 +6,12 @@ import torch
 
 def store(path, data):
     with open(path, "wb") as file:
-        pickle.dump(data, file)
+        dill.dump(data, file)
 
 
 def load(path):
     with open(path, "rb") as file:
-        return pickle.load(file)
+        return dill.load(file)
 
 
 def plot_activations(activations, bounds=(-1, 1), n=100):
