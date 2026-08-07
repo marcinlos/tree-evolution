@@ -14,7 +14,7 @@ def load(path):
         return dill.load(file)
 
 
-def plot_activations(activations, bounds=(-1, 1), n=100):
+def plot_activations(activations, bounds=(-1, 1), n=100, file=None):
     x0, x1 = bounds
     device = _extract_device(activations[0])
     x = np.linspace(x0, x1, n)
@@ -24,6 +24,9 @@ def plot_activations(activations, bounds=(-1, 1), n=100):
     for mod, ax in zip(activations, axs, strict=True):
         y = mod(x_torch)
         ax.plot(x, _numpify(y))
+
+    if file is not None:
+        plt.savefig(file)
 
     plt.show()
     plt.close(fig)
