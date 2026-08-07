@@ -12,7 +12,7 @@
 #     name: python3
 # ---
 
-# %% colab={"base_uri": "https://localhost:8080/"} id="b_9CqiNW5lPg" outputId="e83e2df5-e4c8-45d5-8bbc-46dd2a2fe8c5"
+# %% colab={"base_uri": "https://localhost:8080/"} id="b_9CqiNW5lPg" outputId="e83e2df5-e4c8-45d5-8bbc-46dd2a2fe8c5" editable=true slideshow={"slide_type": ""}
 import math
 import time
 from functools import partial
@@ -72,7 +72,7 @@ ACTIVATION_MODULES = decode_activations(ACTIVATIONS, ops)
 plot_activations(ACTIVATION_MODULES)
 
 
-# %% id="iO0Bk6pp5-oz"
+# %% id="iO0Bk6pp5-oz" editable=true slideshow={"slide_type": ""}
 class PINN(nn.Module):
     """Simple neural network accepting two features as input and returning a single output
 
@@ -126,6 +126,7 @@ def df(output: torch.Tensor, input: torch.Tensor, order: int = 1) -> torch.Tenso
             grad_outputs=torch.ones_like(input),
             create_graph=True,
             retain_graph=True,
+            allow_unused=True,
         )[0]
 
     return df_value
@@ -477,7 +478,7 @@ def compute_loss(
 # ## Train function
 
 
-# %% id="gO-8FhOHxFIz"
+# %% id="gO-8FhOHxFIz" editable=true slideshow={"slide_type": ""}
 def train_model(
     nn_approximator: PINN,
     loss_fn: Callable,
@@ -512,6 +513,9 @@ def train_model(
             # Plot activation functions to observe their changes during the training
             if (epoch + 1) % PLOT_ACTIVATIONS_EVERY == 0:
                 plot_activations(ACTIVATION_MODULES)
+
+            if np.isnan(loss.item()):
+                break
 
         except KeyboardInterrupt:
             break
@@ -732,7 +736,7 @@ if EXAMPLE == 3:
     z = z - shift_EJ(x, t)
 color = plot_color_error(z.cpu(), x.cpu(), t.cpu(), N_POINTS_X, N_POINTS_T)
 
-# %%
+# %% editable=true slideshow={"slide_type": ""}
 # >>>CHANGE<<<
 # Store the results in a file
 store(OUTPUT_PATH, LOSSES)
