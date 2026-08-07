@@ -70,16 +70,15 @@ POPULATION_SIZE = 5
 # %%
 ops = OperatorRegister()
 
+# %%
+# @ops.unary
+# def zero(x):
+#     return torch.zeros_like(x)
 
-# %% jupyter={"source_hidden": true}
-@ops.unary
-def zero(x):
-    return torch.zeros_like(x)
 
-
-@ops.unary
-def const(x, c):
-    return c * torch.ones_like(x)
+# @ops.unary
+# def const(x, c):
+#     return c * torch.ones_like(x)
 
 
 @ops.unary
