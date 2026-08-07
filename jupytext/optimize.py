@@ -79,7 +79,7 @@ PARAMS = {
 COUNT = 2
 DEPTH = 2
 GENERATIONS = 10
-POPULATION_SIZE = 5
+POPULATION_SIZE = 30
 
 # %% [markdown]
 # Now we define operators used to construct expressions during the evolutionary search.
@@ -287,3 +287,5 @@ while evolution.generation < GENERATIONS:
 
 # %%
 # # !zip -r out.zip out
+
+# %%
