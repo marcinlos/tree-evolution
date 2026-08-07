@@ -47,16 +47,33 @@ from tree_evolution.tree import to_dict
 # ## Configuration
 
 # %% editable=true slideshow={"slide_type": ""}
+
+# Uncomment one of the two
+
+# 1) Eriksson-Johnson
 # Path to the notebook representing the evaluation function
 NOTEBOOK = "problems/PINN_Laplace_Gram.ipynb"
 SUFFIX = "EJ"
 
 # Parameters injected into the above notebook
 PARAMS = {
-    "EPOCHS": 10_000,
+    "EPOCHS": 1000,
     "EXAMPLE": 3,
     "EPSILON": 0.1,
+    "RPINN": 0,
 }
+
+# 2) Cavity flow (Stokes)
+# Path to the notebook representing the evaluation function
+# NOTEBOOK = "problems/Evo_CRVPINN_NavierStokes_cavity_flow.ipynb"
+# SUFFIX = ""
+
+# # Parameters injected into the above notebook
+# PARAMS = {
+#     "EPOCHS": 1000,
+#     "RPINN": 0,
+#     "VELOCITY": 100,
+# }
 
 # Evolutionary search parameters
 COUNT = 2
