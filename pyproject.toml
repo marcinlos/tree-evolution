@@ -53,8 +53,8 @@ notebooks = [
 ]
 
 [project.optional-dependencies]
-cpu = [ "torch>=2.9.0" ]
-gpu = [ "torch>=2.9.0" ]
+cpu = [ "torch==2.9.1" ]
+gpu = [ "torch==2.9.1" ]
 
 [tool.uv]
 default-groups = "all"
